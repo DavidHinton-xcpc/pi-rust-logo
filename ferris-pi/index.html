@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ferris π · 配色方案画廊</title>
+<meta name="description" content="数学符号 π 的 10 种 Ferris 橙配色造型方案,含 PNG / SVG 源文件下载">
+<link rel="icon" href="assets/09-ferris-face.svg" type="image/svg+xml">
+<style>
+:root {
+  --bg: #0d1117;
+  --bg2: #10161d;
+  --card: #151c24;
+  --line: #26303b;
+  --text: #d8dde4;
+  --dim: #8a94a0;
+  --main: #F74C00;
+  --dark: #C63D00;
+  --light: #FF8A50;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  margin: 0;
+  padding: 0 0 60px;
+}
+a { color: var(--main); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 28px 40px 22px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.site-logo { width: 60px; height: 60px; }
+.site-header h1 { margin: 0; font-size: 24px; font-weight: 700; }
+.site-header h1 .accent { color: var(--main); }
+.tagline { margin: 4px 0 0; color: var(--dim); font-size: 13px; }
+.tagline b { color: var(--main); }
+.site-nav { margin-left: auto; display: flex; gap: 18px; font-size: 14px; }
+.site-nav a { color: var(--dim); padding: 6px 10px; border-radius: 8px; }
+.site-nav a:hover { color: var(--text); text-decoration: none; background: var(--card); }
+
+nav.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 18px 40px 0;
+  font-size: 13px;
+}
+nav.toc a {
+  color: var(--dim);
+  border: 1px solid var(--line);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+nav.toc a:hover { color: var(--main); border-color: var(--main); text-decoration: none; }
+
+main { padding: 10px 40px 0; }
+section.round { margin-top: 34px; }
+section.round > h2 {
+  font-size: 18px;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+section.round > h2 .badge {
+  background: var(--main);
+  color: #1a0a00;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+section.round > p.sub { color: var(--dim); font-size: 13px; margin: 0 0 14px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform .12s ease, border-color .12s ease;
+}
+.card:hover { transform: translateY(-3px); border-color: var(--main); }
+.card img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background:
+    repeating-conic-gradient(#111820 0% 25%, #0d1117 0% 50%) 0 0 / 20px 20px;
+}
+.card .cap { padding: 10px 14px 12px; font-size: 12.5px; line-height: 1.55; color: var(--dim); }
+.card .cap b { color: var(--main); display: block; font-size: 13.5px; margin-bottom: 2px; }
+.card .cap .meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.card .cap .meta a {
+  font-size: 11.5px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 2px 8px;
+  color: var(--dim);
+}
+.card .cap .meta a:hover { color: var(--main); border-color: var(--main); text-decoration: none; }
+
+/* palette section */
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.swatch {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card);
+}
+.swatch .chip { height: 84px; }
+.swatch .info { padding: 10px 14px; font-size: 12.5px; color: var(--dim); }
+.swatch .info b { color: var(--text); display: block; font-size: 13px; }
+.swatch .info code {
+  color: var(--main);
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  cursor: pointer;
+}
+.swatch .info .copied { color: #3fbf7f; }
+
+.site-footer {
+  margin-top: 50px;
+  padding: 20px 40px 0;
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+  font-size: 12.5px;
+}
+
+/* lightbox */
+.lb {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 12, .88);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 50;
+  cursor: zoom-out;
+}
+.lb.is-open { display: flex; }
+.lb img { max-width: min(78vmin, 560px); max-height: 70vh; }
+.lb .lb-cap { color: var(--dim); font-size: 13px; text-align: center; }
+.lb .lb-cap b { color: var(--text); display: block; font-size: 15px; margin-bottom: 2px; }
+
+@media (max-width: 720px) {
+  .site-header { flex-wrap: wrap; padding: 20px 20px 16px; }
+  main, nav.toc { padding-left: 20px; padding-right: 20px; }
+  .site-nav { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <img src="assets/09-ferris-face.svg" alt="Ferris π" class="site-logo">
+  <div>
+    <h1>Ferris π <span class="accent">配色方案</span></h1>
+    <p class="tagline">数学符号 π × Ferris 橙 · <b>10</b> 种造型 · PNG / SVG 源文件可直接下载</p>
+  </div>
+  <nav class="site-nav">
+    <a href="#gallery">造型</a>
+    <a href="#palette">配色</a>
+    <a href="#bonus">Logo 重涂</a>
+    <a href="https://github.com/bigfish1913/pi-rust" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+</header>
+
+<nav class="toc" id="toc"></nav>
+
+<main>
+  <section class="round" id="gallery">
+    <h2><span class="badge">10 造型</span>符号 π · Ferris 配色</h2>
+    <p class="sub">透明背景,仅呈现彩色 π。点击卡片可放大预览;每张卡提供 PNG(480×480,3× 超采样抗锯齿)与 SVG(矢量)下载。</p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="round" id="palette">
+    <h2><span class="badge">配色</span>Ferris 三色橙</h2>
+    <p class="sub">取自项目 crab 系列(c01–c10)统一使用的 Ferris 官方橙,点击色值即可复制。</p>
+    <div class="palette-grid" id="palette-grid"></div>
+  </section>
+
+  <section class="round" id="bonus">
+    <h2><span class="badge">附赠</span>原版 π Logo 重涂</h2>
+    <p class="sub">保留原 reference-pi-logo 三块框架,仅替换为 Ferris 配色的两个版本。</p>
+    <div class="grid" id="bonus-grid"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Ferris π 配色方案 · 由 rpi agent 生成 · <a href="https://github.com/bigfish1913/pi-rust" target="_blank" rel="noopener">bigfish1913/pi-rust</a></p>
+</footer>
+
+<div class="lb" id="lb">
+  <img id="lb-img" src="" alt="">
+  <div class="lb-cap"><b id="lb-title"></b><span id="lb-desc"></span></div>
+</div>
+
+<script>
+const MAIN = "#F74C00", DARK = "#C63D00", LIGHT = "#FF8A50";
+
+const DESIGNS = [
+  ["01-classic",  "01 · 经典三色块", "横梁主橙、左腿深橙、右腿浅橙,对应原版三块构图的 Ferris 化"],
+  ["02-rounded",  "02 · 圆角胶囊",   "全圆头笔画,友好圆润,适合小尺寸图标"],
+  ["03-serif",    "03 · 衬线排版",   "左侧小垂钩加落地衬脚,印刷排版气质"],
+  ["04-pixel",    "04 · 像素积木",   "按行分浅→主→深三档色阶的像素风"],
+  ["05-gradient", "05 · 纵向渐变",   "浅橙→主橙→深橙自上而下过渡"],
+  ["06-outline",  "06 · 空心描边",   "等宽轮廓挖空,线条感最强"],
+  ["07-thinline", "07 · 细线圆头",   "单线极简:横浅、左主、右深"],
+  ["08-diagonal", "08 · 斜切三色",   "沿 45° 对角线切出三段色带"],
+  ["09-ferris-face", "09 · Ferris 脸", "横梁上两只深橙螃蟹眼睛,最有螃蟹味的一版"],
+  ["10-brick",    "10 · 砖块分段",   "腿部分两截留透明缝,模块化积木感"],
+];
+
+const PALETTE = [
+  ["Ferris 主橙", MAIN,  " crab 系列身体色,本方案的主色"],
+  ["Ferris 深橙", DARK,  " 同色系加深,用于阴影侧笔画"],
+  ["Ferris 浅橙", LIGHT, " 同色系提亮,用于高光侧笔画"],
+  ["画布底色",    "#0d1117", "预览底色(方案本身为透明背景)"],
+];
+
+const BONUS = [
+  ["bonus-logo-ferris", "原版 π 重涂 · 三阶橙", "Γ + C + 矩形框架不变,三块分别主橙 / 深橙 / 浅橙"],
+  ["bonus-logo-ferris-all-orange", "原版 π 重涂 · 纯 Ferris 橙", "三块统一 #F74C00,最克制的一版"],
+];
+
+document.getElementById("grid").innerHTML = DESIGNS.map(([id, title, desc]) => `
+  <div class="card">
+    <img src="assets/${id}.png" alt="${title}" loading="lazy"
+         data-full="assets/${id}.svg" data-title="${title}" data-desc="${desc}">
+    <div class="cap">
+      <b>${title}</b>${desc}
+      <div class="meta">
+        <a href="assets/${id}.png" download>PNG ↓</a>
+        <a href="assets/${id}.svg" download>SVG ↓</a>
+      </div>
+    </div>
+  </div>`).join("");
+
+document.getElementById("toc").innerHTML =
+  DESIGNS.map(([id, t]) => `<a href="#d-${id}">${t.split("·")[1].trim()}</a>`).join("");
+
+document.getElementById("palette-grid").innerHTML = PALETTE.map(([name, hex, desc]) => `
+  <div class="swatch">
+    <div class="chip" style="background:${hex}"></div>
+    <div class="info"><b>${name}</b><code title="点击复制">${hex}</code> · ${desc}</div>
+  </div>`).join("");
+
+document.getElementById("bonus-grid").innerHTML = BONUS.map(([id, title, desc]) => `
+  <div class="card">
+    <img src="assets/${id}.png" alt="${title}" loading="lazy"
+         data-full="assets/${id}.svg" data-title="${title}" data-desc="${desc}">
+    <div class="cap">
+      <b>${title}</b>${desc}
+      <div class="meta">
+        <a href="assets/${id}.png" download>PNG ↓</a>
+        <a href="assets/${id}.svg" download>SVG ↓</a>
+      </div>
+    </div>
+  </div>`).join("");
+
+// card id anchors for toc
+document.querySelectorAll("#grid .card").forEach((el, i) => el.id = "d-" + DESIGNS[i][0]);
+
+// lightbox
+const lb = document.getElementById("lb"),
+      lbImg = document.getElementById("lb-img"),
+      lbTitle = document.getElementById("lb-title"),
+      lbDesc = document.getElementById("lb-desc");
+document.querySelectorAll(".card img").forEach(img => {
+  img.style.cursor = "zoom-in";
+  img.addEventListener("click", () => {
+    lbImg.src = img.dataset.full;
+    lbTitle.textContent = img.dataset.title;
+    lbDesc.textContent = img.dataset.desc;
+    lb.classList.add("is-open");
+  });
+});
+lb.addEventListener("click", () => {
+  lb.classList.remove("is-open");
+  lbImg.src = "";
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") { lb.classList.remove("is-open"); lbImg.src = ""; }
+});
+
+// copy hex
+document.querySelectorAll(".swatch code").forEach(code => {
+  code.addEventListener("click", () => {
+    const hex = code.textContent;
+    navigator.clipboard.writeText(hex).then(() => {
+      code.classList.add("copied");
+      const old = code.textContent;
+      code.textContent = "已复制!";
+      setTimeout(() => { code.textContent = old; code.classList.remove("copied"); }, 900);
+    });
+  });
+});
+</script>
+</body>
+</html>
